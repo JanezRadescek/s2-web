@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="files/Logotip_IJS.ico">
+    <title>IJS - S2 tool</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/local.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="javascript/ModifyLogic.js"></script>
+
+</head>
+<body>
+
+<div class="jumbotron-local text-center" style="margin-bottom:0">
+    <h1>S2 <small>tool</small></h1>
+    <p>WEB part of CLI</p>
+</div>
+
+<div class="container">
+    <!--    MAIN BAR-->
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#modify">Modify</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#generate">Generate</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#download">Download</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#documentation">Documentation</a></li>
+            </ul>
+        </div>
+
+        <div id="loginNav" class="col-auto">
+            <ul class="nav nav-tabs ">
+                <li class="nav-item"><a id="loginLink" class="nav-link" href="#">Login</a></li>
+                <li class="nav-item"><a class="nav-link disabled" >Register</a></li>
+            </ul>
+        </div>
+
+        <div id="tmpUser" class="col-auto" style="display: none">
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a id="tmpUserName" class="nav-link" href="#"></a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!--LOGIN-->
+    <div id="loginDiv" class="login1">
+        <div class="login2">
+            <form id="login" onsubmit="event.preventDefault(); return false;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <label for="accountName"><b>Username</b></label>
+                        <input id="accountName" class="form-control login-input" type="text" placeholder="Enter Username" required>
+                    </div>
+                    <div class="row">
+                        <label for="password"><b>Password</b></label>
+                        <input id="password" class="form-control login-input" type="password" placeholder="Enter Password" required>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row" style="margin: 1rem 0">
+                <div class="col">
+                    <button id="loginLogin" class="btn btn-success">Login</button>
+                </div>
+
+                <div class="col">
+                    <button id="loginCancel" class="btn btn-warning float-right">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+
+        <div id="home" class="tab-pane fade" style="border: #0b2e13 1px solid">
+            <div class="container-fluid">
+                <h3>README</h3>
+                <p>Web interfance off CLI project</p>
+            </div>
+
+            <div class="container-fluid">
+                <h3>Quote of the day</h3>
+                <p>Todays problems come from yesterdays solutions.</p>
+            </div>
+
+            <div class="container-fluid">
+                <h3>DEPENDENCIES</h3>
+                <blockquote class="blockquote">Finding prooper dependencies is left for the reader as an exercise!!!
+                    <footer class="blockquote-footer">lazy developer</footer>
+                </blockquote>
+            </div>
+
+            <div class="container-fluid">
+                <h3>LICENSE THEOREM</h3>
+                <p>There exist such license that this project is suitable to that exact license.</p>
+            </div>
+        </div>
+
+        <div id="modify" class="tab-pane fade show active" style="border: #0b2e13 1px solid">
+
+            <form id="modifyForm" onsubmit="event.preventDefault(); return false;">
+
+                <!--SUBMIT-->
+                <div class="container-fluid">
+
+                    <hr class="hr-tiny">
+                    <div class="progress">
+                        <div id="modifyProgresUpload" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">Upload</div>
+                    </div>
+                    <hr class="hr-tiny">
+                    <div class="progress">
+                        <div id="modifyProgresProcess" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">Process</div>
+                    </div>
+                    <hr class="hr-tiny">
+                    <div class="row">
+                        <div class="col">
+                            <button id="modifyRun" class="btn btn-primary btn-submit">Submit</button>
+                        </div>
+
+                        <div class="col">
+                            <button id="modifyArguments" class="btn btn-primary">Cli arguments</button>
+                        </div>
+
+                        <div class="col">
+                            <label for="modifyDisplayCB" class="btn btn-primary">
+                                <input id="modifyDisplayCB" type="checkbox" data-toggle="collapse" data-target="#modifyDisplay">Display</input>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--DISPLAY-->
+                <div class="container-fluid">
+                    <div class="collapse multi-collapse" id="modifyDisplay">
+                        <div class="card card-body cardFilter">
+                            <p id="modifyDisplayC">Cli command was : </p>
+                            <p id="modifyDisplayP" style="max-height: 15rem;overflow-y: auto" >
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--INPUT-->
+                <div class="container-fluid">
+                    <h3 >Select Primary File</h3>
+
+                    <div class="row">
+                        <!--LOCAL-->
+                        <div id="modifyInput" class="col-5 float-left">
+
+                            <h5>Local file</h5>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                        Browse <input type="file" id="inputF1" style="display: none;" accept=".s2">
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div style="margin-top: 2rem">
+                                <p>CHOOSEN FILE IS : <span id="inputF1text">None</span></p>
+                            </div>
+
+                        </div>
+
+                        <!--REMOTE-->
+                        <div id="onlineFilesDiv" class="col-7" style="display: none">
+
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="nav">
+                                        <li class="nav-item"><a class="nav-link"><h5>Remote files</h5></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto">
+                                    <ul class="nav nav-tabs float-right">
+
+                                        <li class="nav-item"><a class="nav-link" href="#" onclick="$('#modifyUploadFile').click()">
+                                            upload file
+                                        </a></li> <input id="modifyUploadFile" type="file" style="display: none;" accept=".s2">
+                                        <li class="nav-item"><a class="nav-link disabled">delete all</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="onlineFiles" class="list-group">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--FILTERS-->
+                <div id="modifySelectFilters" class="container-fluid">
+                    <h3>Choose Filters</h3>
+                    <!--select filters-->
+                    <div id="modifySelectFiltersCheckBoxes" class="1-mar row">
+                        <div class="col">
+                            <label for="filterMergeCB" class="btn btn-primary">
+                                <input id="filterMergeCB" type="checkbox" data-toggle="collapse" data-target="#filterMerge">Merge</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterDataCB" class="btn btn-primary">
+                                <input id="filterDataCB" type="checkbox" data-toggle="collapse" data-target="#filterData">Filter Data</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterNumberLinesCB" class="btn btn-primary">
+                                <input id="filterNumberLinesCB" type="checkbox" data-toggle="collapse" data-target="#filterNumberLines">Limit number of Lines</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterCommentsCB" class="btn btn-primary">
+                                <input id="filterCommentsCB" type="checkbox" data-toggle="collapse" data-target="#filterComments">Comments</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterSpecialCB" class="btn btn-primary">
+                                <input id="filterSpecialCB" type="checkbox" data-toggle="collapse" data-target="#filterSpecial">Special message</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterHandlesCB" class="btn btn-primary">
+                                <input id="filterHandlesCB" type="checkbox" data-toggle="collapse" data-target="#filterHandles">Handles</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterTimeCB" class="btn btn-primary">
+                                <input id="filterTimeCB" type="checkbox" data-toggle="collapse" data-target="#filterTime">Time</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterChangeHandleCB" class="btn btn-primary">
+                                <input id="filterChangeHandleCB" type="checkbox" data-toggle="collapse" data-target="#filterChangeHandle">Change Handle</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterChangeTimeCB" class="btn btn-primary">
+                                <input id="filterChangeTimeCB" type="checkbox" data-toggle="collapse" data-target="#filterChangeTime">Change Time</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterChangeDateCB" class="btn btn-primary">
+                                <input id="filterChangeDateCB" type="checkbox" data-toggle="collapse" data-target="#filterChangeDate">Change Date</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterProcessSignalCB" class="btn btn-primary">
+                                <input id="filterProcessSignalCB" type="checkbox" data-toggle="collapse" data-target="#filterProcessSignal">Process Signal</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterStatisticsCB" class="btn btn-primary">
+                                <input id="filterStatisticsCB" type="checkbox" data-toggle="collapse" data-target="#filterStatistics">Statistics</input>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label for="filterOutputCB" class="btn btn-primary">
+                                <input id="filterOutputCB" type="checkbox" data-toggle="collapse" data-target="#filterOutput">Output</input>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!--modify selected filters-->
+                    <div id="modifyFilters">
+
+                        <div class="collapse multi-collapse" id="filterMerge">
+                            <div class="card card-body cardFilter">
+                                <p>Merge two files into one file.</p>
+                                <div>
+                                    <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                        Browse <input type="file" id="inputF2" style="display: none;" accept=".s2">
+                                    </label>
+                                    <small class="form-text text-muted" id="inputF2text">Select the file you want to merge with primary file.</small>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterMergeCB1" value="true">
+                                    <label class="form-check-label" for="filterMergeCB1">If checked streams with the same handle as some other stream will get new unique handle.</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterData">
+                            <div class="card card-body cardFilter">
+                                <p>Discard data lines of checked type. Meta data can not be deleted from s2 files with version PCARD.</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterDataCB1">
+                                    <label class="form-check-label" for="filterDataCB1">Comments</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterDataCB2">
+                                    <label class="form-check-label" for="filterDataCB2">Special Messages</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterDataCB3">
+                                    <label class="form-check-label" for="filterDataCB3">Meta data</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterDataCB4">
+                                    <label class="form-check-label" for="filterDataCB4">Stream packets</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterDataCB5">
+                                    <label class="form-check-label" for="filterDataCB5">Unknown lines</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterNumberLines">
+                            <div class="card card-body cardFilter">
+                                <p>Keeps first 10 Unknow lines, first 10 special messages, and first X StreamPackets.</p>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">X</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="filterNumberLinesN1" min="0" step="1">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterComments">
+                            <div class="card card-body cardFilter">
+                                <p>Keeps comments maching provided regex, discard the rest.</p>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Regex</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="filterCommentsT1">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterSpecial">
+                            <div class="card card-body cardFilter">
+                                <p>Keeps special messages with choosen who and what and maching regex, discard the rest.</p>
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend" >
+                                                <span class="input-group-text">Who</span>
+                                            </div>
+                                            <select id="filterSpecialWho" class="form-control">
+                                                <option value="0" selected>sensing device</option>
+                                                <option value="1">recording device</option>
+                                                <option value="2" >editing device</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend" >
+                                                <span class="input-group-text">What</span>
+                                            </div>
+                                            <select id="filterSpecialWhat" class="form-control">
+                                                <option value="w" selected>warning</option>
+                                                <option value="e">error</option>
+                                                <option value="x">exception</option>
+                                                <option value="d">debug</option>
+                                                <option value="n">note</option>
+                                                <option value="a">annotation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Regex</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="filterSpecialT1">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterHandles">
+                            <div class="card card-body cardFilter">
+                                <p>To include handle #i, put 1 in position i+1 (from right to left) in the argument, to exclude it, put 0.</p>
+                                <input type="number" class="form-control" id="filterHandlesT1" min="0" step="1">
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterTime">
+                            <div class="card card-body cardFilter">
+                                <p>Data on interval [End, start) will be keep, the rest will be deleted. If third optional argument is true we approximate
+                                    comments and speciall messages with last previous time and therefore delete them if outside interval.</p>
+                                <div class="form-group form-row">
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Start</span>
+                                        </div>
+                                        <input id="filterTimeN1" type="number" class="form-control" min="0">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">s</span>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">End</span>
+                                        </div>
+                                        <input id="filterTimeN2" type="number" class="form-control" min="0">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">s</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="filterTimeCB1" value="option3">
+                                    <label class="form-check-label" for="filterTimeCB1">Aproximate.</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterChangeHandle">
+                            <div class="card card-body cardFilter">
+                                <p>Give lines, with handle X in input S2, handle Y in output S2.</p>
+
+                                <div class="form-group form-row">
+                                    <div class="input-group col-md-5">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">X</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="filterChangeHandleN1" min="0" max="31">
+                                    </div>
+
+                                    <div class="col-md-2 text-center">
+                                        <img src="files/arrow_r.png" style="max-height: 1rem;width: auto;">
+                                    </div>
+
+
+                                    <div class="input-group col-md-5">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Y</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="filterChangeHandleN2" min="0" max="31">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterChangeTime">
+                            <div class="card card-body cardFilter">
+                                <p>Add time in argument to all timestamps. If added time is negative and its absolute value bigger than value of first time stamp,
+                                    added time will be set to -first time, resulting in new first time stamp being 0.</p>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">&Delta; t</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="filterChangeTimeN1">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">s</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterChangeDate">
+                            <div class="card card-body cardFilter">
+                                <p>Change date in meta into new one. Timestamps are relative to date in meta
+                                    and therefore are changed so the absolute timestamps of data does not change.</p>
+
+                                <div class="form-group form-row">
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <input id="filterChangeDateDate" type="date" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <div class="input-group">
+                                            <input id="filterChangeDateHr" type="number" class="form-control"
+                                                   oninput="this.value = Math.floor(Math.max(0,Math.min(this.value,23)))">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">hr</span>
+                                            </div>
+
+                                            <input id="filterChangeDateMin" type="number" class="form-control" min="0" max="59" step="1"
+                                                   oninput="this.value = Math.floor(Math.max(0,Math.min(this.value,59)))">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="input-group">
+                                            <input id="filterChangeDateS" type="number" class="form-control" step="any"
+                                                   onchange="
+                                                   if(!(this.value<60 && this.value>= 0))
+                                                   {
+                                                       this.value = 0
+                                                   }
+                                                   else
+                                                   {
+                                                       let a = parseFloat(this.value).toFixed(3);
+                                                       let b =a.replace(',','.');
+                                                       this.value = b;
+                                                   }">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">s</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="input-group">
+                                            <input id="filterChangeDateZone" type="number" class="form-control" min="-12" max="14">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">:00 zone</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterProcessSignal">
+                            <div class="card card-body cardFilter">
+                                <p style="margin-bottom: 0px">Changes timestamps based on linear regresion.</p>
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterStatistics">
+                            <div class="card card-body cardFilter">
+                                <p>Outputs statistics of input S2 file. It has optional argument name of file for outputting statistics.
+                                    If argument is missing it will print statistics to Console. DO NOT confuse this argument with flag -o output.</p>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Name</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="filterStatistikaT1"></input>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.txt</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="collapse multi-collapse" id="filterOutput">
+                            <div class="card card-body cardFilter">
+                                <p>General output for result of other flags. If Argument is name with extension, it will output into specifed file.
+                                    If argument equals 'xyz' where 'xyz' is file extension only, it will print result to the Console.
+                                    Type of output will be based on extension. Possible extensions are 's2', 'txt' and 'csv'.</p>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Name</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="filterOutputT1"></input>
+                                    <div class="input-group-append">
+                                        <select id="filterOutputExtension" class="form-control input-group-text">
+                                            <option value="s2" selected>.s2</option>
+                                            <option value="txt">.txt</option>
+                                            <option value="csv" >.csv</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div id="generate" class="tab-pane fade" style="border: #0b2e13 1px solid">
+
+            <form id="generateForm" onsubmit="event.preventDefault(); return false;">
+
+                <!--       INPUT FILES          -->
+                <div id="generateInput" class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Upload 1 File</h3>
+                            <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                Browse <input type="file" id="generateInputF1" style="display: none;" accept=".txt,.csv">
+                            </label>
+                            <small class="form-text text-muted" id="generateInputF1text">Select first file.</small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h3>Upload 2 File</h3>
+                            <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                Browse <input type="file" id="generateInputF2" style="display: none;" accept=".txt,.csv">
+                            </label>
+                            <small class="form-text text-muted" id="generateInputF2text">Select second file.</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Upload 3 File</h3>
+                            <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                Browse <input type="file" id="generateInputF3" style="display: none;" accept=".txt,.csv">
+                            </label>
+                            <small class="form-text text-muted" id="generateInputF3text">Select 3 file.</small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h3>Upload 4 File</h3>
+                            <label class="btn btn-primary" style="margin-bottom: 0rem">
+                                Browse <input type="file" id="generateInputF4" style="display: none;" accept=".txt,.csv">
+                            </label>
+                            <small class="form-text text-muted" id="generateInputF4text">Select 4 file.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!--       "FILTERS"          -->
+                <div id="generateSelectFilters" class="container-fluid">
+                    <h3>Choose Parameters</h3>
+
+
+                    <!--mandatory parametrs-->
+                    <div>
+                        <div class="card card-body cardFilter">
+                            <h4>OutPut</h4>
+
+                            <p>Name of file.</p>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Name</span>
+                                </div>
+                                <input id="generateFilterOutput" type="text" class="form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.s2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card card-body cardFilter">
+                        <h4>Time</h4>
+                        <p>Generates data on interval [End, start).</p>
+                        <div class="form-group form-row">
+                            <div class="input-group col-md-6">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Start</span>
+                                </div>
+                                <input id="generateFilterTimeN1" type="number" class="form-control" min="0">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">s</span>
+                                </div>
+                            </div>
+                            <div class="input-group col-md-6">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">End</span>
+                                </div>
+                                <input id="generateFilterTimeN2" type="number" class="form-control" min="0">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--generating from scratch-->
+                    <div id="generateParametrsExtra">
+
+                        <div class="card card-body cardFilter">
+                            <h4>Seed</h4>
+                            <p>Seed for random generator.</p>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">#</span>
+                                </div>
+                                <input id="generateFilterSeedN1" type="number" class="form-control" min="0">
+                            </div>
+                        </div>
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Frequency</h4>
+                            <p>Aproximatly average frequency. Factor of how much can frequency frequencyRamp.</p>
+                            <div class="form-group form-row">
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Frequeny</span>
+                                    </div>
+                                    <input id="generateFilterFrequencyN1" type="number" class="form-control" min="0">
+                                </div>
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Factor</span>
+                                    </div>
+                                    <input id="generateFilterFrequencyChangeN1" type="number" class="form-control" min="0" max="1">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Missing</h4>
+                            <p>Aproximate factor of missing packets.</p>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Factor</span>
+                                </div>
+                                <input id="generateFilterMissingN1" type="number" class="form-control" min="0" max="1">
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Delay</h4>
+                            <p>Maximum of standard delay on every packet in ns.</p>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Value</span>
+                                </div>
+                                <input id="generateFilterDelayN1" type="number" class="form-control" min="0">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">ns</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Big Delay</h4>
+                            <p>At the end of big delay, we get packets in quick burst in same order as if there were no big delay.</p>
+                            <div class="form-group form-row">
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Chance</span>
+                                    </div>
+                                    <input id="generateFilterBigDelayChanceN1" type="number" class="form-control" min="0" max="1">
+                                </div>
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Value</span>
+                                    </div>
+                                    <input id="generateFilterMaxBigDelayN1" type="number" class="form-control" min="0">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">ns</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Disconects</h4>
+                            <p>Number of disconects that will ocure in file. Disconect means we dont and never will get
+                                packets which were made during disconect.</p>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">#</span>
+                                </div>
+                                <input id="generateFilterDisconectsN1" type="number" class="form-control" min="0">
+                            </div>
+                        </div>
+
+
+                        <div class="card card-body cardFilter">
+                            <h4>Stuck bit</h4>
+                            <p>Stuck bit.</p>
+                            <div class="form-group form-row">
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Index</span>
+                                    </div>
+                                    <input id="generateFilterStuckBitIndexN1" type="number" class="form-control" min="0">
+                                </div>
+                                <div class="input-group col-md-6">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Value</span>
+                                    </div>
+                                    <input id="generateFilterStuckBitValueN1" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--       PROGRESS + RUN          -->
+                    <div class="container-fluid">
+                        <hr>
+                        <div class="progress">
+                            <div id="generateProgresUpload" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">Upload</div>
+                        </div>
+                        <hr>
+                        <div class="progress">
+                            <div id="generateProgresProcess" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">Process</div>
+                        </div>
+                        <hr>
+                        <button id="generateRun" class="btn btn-primary">Generate</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <!--           CONSOLE           -->
+            <div id="generateDisplayAndh3" class="container-fluid">
+                <div id="generateDisplayUnder" class="console-under"></div>
+                <div id="generateDisplay" class="console">
+
+                    <div class="row">
+                        <div class="col-md-2 displayButtons">
+                            <h6>Console</h6>
+                            <button id="generateReset" class="btn btn-outline-primary btn-block btn-sm">reset</button>
+                            <button id="generaUseless" class="btn btn-outline-primary btn-block btn-sm">useless</button>
+                        </div>
+                        <div class="col" style="max-height: 10rem;overflow-y: auto">
+                            <p id="generateDisplayP" style="font-size: 0.8rem" >
+                                Boris Brejcha
+                                The cat or domestic cat (Felis catus) is a small carnivorous mammal.[2][1] It is the only domesticated species in the family Felidae.[4] The cat is either a house cat, kept as a pet; or a feral cat, freely ranging and avoiding human contact.[5] A house cat is valued by humans for companionship and for its ability to hunt rodents. About 60 cat breeds are recognized by various cat registries.[6]
+                                Cats are similar in anatomy to the other felid species, with a strong flexible body, quick reflexes, sharp teeth and retractable claws adapted to killing small prey. They are predators who are most active at dawn and dusk. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small animals. Compared to humans, they see better in the dark (they see in near total darkness) and have a better sense of smell, but poorer color vision. Cats, despite being solitary hunters, are a social species. Cat communication includes the use of vocalizations including mewing, purring, trilling, hissing, growling and grunting as well as cat-specific body language.[7] Cats also communicate by secreting and perceiving pheromones.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="download" class="tab-pane fade">
+
+            <h3>
+                Download
+            </h3>
+
+            <p>
+                On following link you can download jar file of Cli. It enables you to run Cli localy. You can get desired Cli arguments by filling website and then click "Cli arguments".
+            </p>
+
+            <div class="container-fluid">
+                <a class="btn btn-primary" href="files/Cli.jar">Download</a>
+            </div>
+        </div>
+
+        <div id="documentation" class="tab-pane fade">
+
+            <embed src="files/Examples.pdf" type="application/pdf" style="max-width:100%;width:100%;height:75vh;background-color:lightblue;" />
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

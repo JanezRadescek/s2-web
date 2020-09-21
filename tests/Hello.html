@@ -1,0 +1,33 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script>
+        function show() {
+            document.getElementById("txt").innerHTML = "umes";
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txt").innerHTML = "dobili smo odgovor";
+
+                    //let res = JSON.parse(this.response);
+
+                    document.getElementById("txt").innerHTML = this.response;
+                }
+            };
+
+            xmlhttp.open("POST", "dummy.php", true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body>
+
+
+<button onclick="show()">Click me to change text bellow</button>
+
+<p id="txt">TXT before you click on button.</p>
+
+</body>
+</html>
